@@ -16,10 +16,10 @@
 
 package com.example.android.wizardpager.wizard.model;
 
-import com.example.android.wizardpager.wizard.ui.SingleChoiceFragment;
-
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import com.example.android.wizardpager.wizard.ui.SingleChoiceFragment;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,13 @@ import java.util.List;
  * next set of steps in the wizard may change.
  */
 public class BranchPage extends SingleFixedChoicePage {
-    private List<Branch> mBranches = new ArrayList<Branch>();
+
+    @Expose private List<Branch> mBranches = new ArrayList<Branch>();
+
+    public BranchPage(String title, boolean required, List<Branch> mBranches) {
+        super(title, required, null);
+        this.mBranches = mBranches;
+    }
 
     public BranchPage(ModelCallbacks callbacks, String title) {
         super(callbacks, title);
@@ -110,9 +116,9 @@ public class BranchPage extends SingleFixedChoicePage {
         return this;
     }
 
-    private static class Branch {
-        public String choice;
-        public PageList childPageList;
+    public static class Branch {
+        @Expose public String choice;
+        @Expose public PageList childPageList;
 
         private Branch(String choice, PageList childPageList) {
             this.choice = choice;

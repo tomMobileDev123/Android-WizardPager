@@ -18,6 +18,7 @@ package com.example.android.wizardpager.wizard.model;
 
 import android.content.Context;
 import android.os.Bundle;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +33,7 @@ public abstract class AbstractWizardModel implements ModelCallbacks {
     protected Context mContext;
 
     private List<ModelCallbacks> mListeners = new ArrayList<ModelCallbacks>();
-    private PageList mRootPageList;
+    @Expose private PageList mRootPageList;
 
     public AbstractWizardModel(Context context) {
         mContext = context;

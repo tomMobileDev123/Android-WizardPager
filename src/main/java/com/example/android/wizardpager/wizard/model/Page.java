@@ -18,6 +18,7 @@ package com.example.android.wizardpager.wizard.model;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 
@@ -36,13 +37,27 @@ public abstract class Page implements PageTreeNode {
      * Current wizard values/selections.
      */
     protected Bundle mData = new Bundle();
-    protected String mTitle;
-    protected boolean mRequired = false;
+    @Expose protected String mTitle;
+    @Expose protected boolean mRequired = false;
     protected String mParentKey;
+
+    /**
+     * For JSON serialization / deserialization.
+     */
+    @Expose protected String mPageType;
+
+    protected Page(String title, boolean required) {
+        this.mTitle = title;
+        this.mRequired = required;
+    }
 
     protected Page(ModelCallbacks callbacks, String title) {
         mCallbacks = callbacks;
         mTitle = title;
+    }
+
+    public void setCallbacks(ModelCallbacks mCallbacks) {
+        this.mCallbacks = mCallbacks;
     }
 
     public Bundle getData() {
@@ -96,4 +111,13 @@ public abstract class Page implements PageTreeNode {
         mRequired = required;
         return this;
     }
+
+    public String getPageType() {
+        return mPageType;
+    }
+
+    public void setPageType(String mPageType) {
+        this.mPageType = mPageType;
+    }
+
 }

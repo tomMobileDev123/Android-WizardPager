@@ -16,10 +16,10 @@
 
 package com.example.android.wizardpager.wizard.model;
 
-import com.example.android.wizardpager.wizard.ui.SingleChoiceFragment;
-
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import com.example.android.wizardpager.wizard.ui.SingleChoiceFragment;
+import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -28,7 +28,13 @@ import java.util.Arrays;
  * A page offering the user a number of mutually exclusive choices.
  */
 public class SingleFixedChoicePage extends Page {
-    protected ArrayList<String> mChoices = new ArrayList<String>();
+
+    @Expose protected ArrayList<String> mChoices = new ArrayList<String>();
+
+    public SingleFixedChoicePage(String title, boolean required, ArrayList<String> mChoices) {
+        super(title, required);
+        this.mChoices = mChoices;
+    }
 
     public SingleFixedChoicePage(ModelCallbacks callbacks, String title) {
         super(callbacks, title);
