@@ -19,6 +19,7 @@ package com.example.android.wizardpager.wizard.model;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
@@ -44,7 +45,7 @@ public abstract class Page implements PageTreeNode {
     /**
      * For JSON serialization / deserialization.
      */
-    @Expose protected String mPageType;
+    @Expose @SerializedName("type") protected String mPageType;
 
     protected Page(String title, boolean required) {
         this.mTitle = title;

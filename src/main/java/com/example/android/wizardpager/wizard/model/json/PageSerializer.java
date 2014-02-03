@@ -57,7 +57,7 @@ public class PageSerializer implements JsonSerializer<Page>, JsonDeserializer<Pa
         JsonObject jsonObj = json.getAsJsonObject();
         String title = jsonObj.get("mTitle").getAsString();
         boolean required = jsonObj.get("mRequired").getAsBoolean();
-        PageType pageType = PageType.findByKey(jsonObj.get("mPageType").getAsString());
+        PageType pageType = PageType.findByKey(jsonObj.get("type").getAsString());
 
         switch (pageType) {
 
