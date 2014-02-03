@@ -51,4 +51,5 @@ public class PageList extends ArrayList<Page> implements PageTreeNode {
             childPage.flattenCurrentPageSequence(dest);
         }
     }
+
 }

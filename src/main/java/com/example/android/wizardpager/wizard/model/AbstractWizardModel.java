@@ -64,7 +64,12 @@ public abstract class AbstractWizardModel implements ModelCallbacks {
     }
 
     public Page findByKey(String key) {
-        return mRootPageList.findByKey(key);
+        Page page = mRootPageList.findByKey(key);
+        if (page.getCallbacks() == null) {
+            page.setCallbacks(this);
+        }
+
+        return page;
     }
 
     public void load(Bundle savedValues) {

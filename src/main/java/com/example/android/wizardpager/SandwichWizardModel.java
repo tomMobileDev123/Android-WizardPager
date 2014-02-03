@@ -16,14 +16,11 @@
 
 package com.example.android.wizardpager;
 
-import com.example.android.wizardpager.wizard.model.AbstractWizardModel;
-import com.example.android.wizardpager.wizard.model.BranchPage;
-import com.example.android.wizardpager.wizard.model.CustomerInfoPage;
-import com.example.android.wizardpager.wizard.model.MultipleFixedChoicePage;
-import com.example.android.wizardpager.wizard.model.PageList;
-import com.example.android.wizardpager.wizard.model.SingleFixedChoicePage;
-
 import android.content.Context;
+import com.example.android.wizardpager.wizard.model.*;
+import com.google.gson.Gson;
+
+import static com.example.android.wizardpager.wizard.util.WizardUtil.createGson;
 
 public class SandwichWizardModel extends AbstractWizardModel {
     public SandwichWizardModel(Context context) {
@@ -32,7 +29,7 @@ public class SandwichWizardModel extends AbstractWizardModel {
 
     @Override
     protected PageList onNewRootPageList() {
-        return new PageList(
+        PageList pageList = new PageList(
                 new BranchPage(this, "Order type")
                         .addBranch("Sandwich",
                                 new SingleFixedChoicePage(this, "Bread")
@@ -75,5 +72,11 @@ public class SandwichWizardModel extends AbstractWizardModel {
                 new CustomerInfoPage(this, "Your info")
                         .setRequired(true)
         );
+
+        Gson gson = createGson();
+        String pageListJson = gson.toJson(pageList);
+        PageList pageListFromJson = gson.fromJson(pageListJson, PageList.class);
+
+        return pageListFromJson;
     }
 }

@@ -56,6 +56,10 @@ public abstract class Page implements PageTreeNode {
         mTitle = title;
     }
 
+    public ModelCallbacks getCallbacks() {
+        return mCallbacks;
+    }
+
     public void setCallbacks(ModelCallbacks mCallbacks) {
         this.mCallbacks = mCallbacks;
     }
