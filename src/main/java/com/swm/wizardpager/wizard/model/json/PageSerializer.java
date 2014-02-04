@@ -7,13 +7,15 @@ package com.swm.wizardpager.wizard.model.json;
   * Time: 11:40 AM
   */
 
-import com.swm.wizardpager.wizard.model.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import com.swm.wizardpager.wizard.model.*;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PageSerializer implements JsonSerializer<Page>, JsonDeserializer<Page> {
 
@@ -46,8 +48,12 @@ public class PageSerializer implements JsonSerializer<Page>, JsonDeserializer<Pa
         } else {
             throw new UnsupportedOperationException("unknown PageType");
         }
-        src.setPageType(pageType.toString());
-        return context.serialize(src);
+
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("type", pageType.toString());
+        map.put("data", src);
+
+        return context.serialize(map);
     }
 
     @Override
@@ -55,22 +61,24 @@ public class PageSerializer implements JsonSerializer<Page>, JsonDeserializer<Pa
         Page page;
 
         JsonObject jsonObj = json.getAsJsonObject();
-        String title = jsonObj.get("mTitle").getAsString();
-        boolean required = jsonObj.get("mRequired").getAsBoolean();
         PageType pageType = PageType.findByKey(jsonObj.get("type").getAsString());
+        JsonObject dataObj = jsonObj.get("data").getAsJsonObject();
+
+        String title = dataObj.get("mTitle").getAsString();
+        boolean required = dataObj.get("mRequired").getAsBoolean();
 
         switch (pageType) {
 
             case branch:
-                List<BranchPage.Branch> branches = deserializeBranches(context, jsonObj);
+                List<BranchPage.Branch> branches = deserializeBranches(context, dataObj);
                 page = new BranchPage(title, required, branches);
                 break;
             case multichoice:
-                ArrayList<String> choices = deserializeChoices(context, jsonObj);
+                ArrayList<String> choices = deserializeChoices(context, dataObj);
                 page = new MultipleFixedChoicePage(title, required, choices);
                 break;
             case singlechoice:
-                choices = deserializeChoices(context, jsonObj);
+                choices = deserializeChoices(context, dataObj);
                 page = new SingleFixedChoicePage(title, required, choices);
                 break;
             case text:

@@ -19,7 +19,6 @@ package com.swm.wizardpager.wizard.model;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
 
@@ -41,11 +40,6 @@ public abstract class Page implements PageTreeNode {
     @Expose protected String mTitle;
     @Expose protected boolean mRequired = false;
     protected String mParentKey;
-
-    /**
-     * For JSON serialization / deserialization.
-     */
-    @Expose @SerializedName("type") protected String mPageType;
 
     protected Page(String title, boolean required) {
         this.mTitle = title;
@@ -115,14 +109,6 @@ public abstract class Page implements PageTreeNode {
     public Page setRequired(boolean required) {
         mRequired = required;
         return this;
-    }
-
-    public String getPageType() {
-        return mPageType;
-    }
-
-    public void setPageType(String mPageType) {
-        this.mPageType = mPageType;
     }
 
 }
