@@ -13,7 +13,7 @@ import com.swm.wizardpager.wizard.model.json.PageSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class WizardUtil {
+public class WizUtil {
 
     public static Gson createGson() {
         GsonBuilder gsonBuilder = new GsonBuilder();

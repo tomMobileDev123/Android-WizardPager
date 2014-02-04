@@ -20,7 +20,7 @@ import android.content.Context;
 import com.swm.wizardpager.wizard.model.*;
 import com.google.gson.Gson;
 
-import static com.swm.wizardpager.wizard.util.WizardUtil.createGson;
+import static com.swm.wizardpager.wizard.util.WizUtil.createGson;
 
 public class SandwichWizardModel extends AbstractWizardModel {
     public SandwichWizardModel(Context context) {

@@ -8,17 +8,16 @@ package com.swm.wizardpager;
   */
 
 import android.util.Log;
-import com.swm.wizardpager.wizard.model.AbstractWizardModel;
 import com.google.gson.Gson;
+import com.swm.wizardpager.wizard.model.AbstractWizardModel;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.shadows.ShadowLog;
 
-import static com.swm.wizardpager.wizard.util.WizardUtil.createGson;
+import static com.swm.wizardpager.wizard.util.WizUtil.createGson;
 import static org.fest.assertions.api.Assertions.assertThat;
 
 @RunWith(RobolectricTestRunner.class)
@@ -26,12 +25,11 @@ public class WizardModelTest {
 
     AbstractWizardModel wizModel;
 
-    Gson gson;
+    Gson GSON = createGson();
 
     @Before
     public void setUp() throws Exception {
         wizModel = new SandwichWizardModel(Robolectric.application);
-        gson = createGson();
         ShadowLog.stream = System.out;
     }
 
@@ -42,16 +40,24 @@ public class WizardModelTest {
 
     @Test
     public void shouldSerialize() throws Exception {
-        String wizJson = gson.toJson(wizModel);
+        String wizJson = GSON.toJson(wizModel);
         Log.i("WizJson", wizJson);
-        AbstractWizardModel wizModelFromJson = gson.fromJson(wizJson, SandwichWizardModel.class);
+        AbstractWizardModel wizModelFromJson = GSON.fromJson(wizJson, SandwichWizardModel.class);
 
         assertThat(wizModelFromJson).isEqualsToByComparingFields(wizModel);
         assertThat(wizModelFromJson).isNotSameAs(wizModel);
     }
 
-    @Test @Ignore
+    /*@Test @Ignore
     public void shouldParcel() throws Exception {
-    }
+        Parcel p = Parcel.obtain();
+        wizModel.writeToParcel(p, 0);
+        p.setDataPosition(0);
+
+        AbstractWizardModel wizFromP = AbstractWizardModel.CREATOR.createFromParcel(p);
+
+        assertThat(wizFromP).isEqualTo(wizModel);
+        assertThat(wizFromP).isNotSameAs(wizModel);
+    }*/
 
 }
